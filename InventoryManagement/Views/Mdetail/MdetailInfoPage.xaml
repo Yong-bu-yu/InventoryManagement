@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InventoryManagement.Views.Mdetail.MdetailInfoPage"
+             xmlns:converter="clr-namespace:InventoryManagement.Converter"
+             xmlns:local="clr-namespace:InventoryManagement.ViewModel"
+             Title="返回">
+    <ContentPage.Resources>
+        <converter:KeyValuePairsConverter x:Key="keyValuePairsConverter"/>
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <local:MdetailViewModel/>
+    </ContentPage.BindingContext>
+    <ScrollView>
+        <ListView ItemsSource="{Binding KeyValuePairs}" RowHeight="90" HasUnevenRows="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Padding="15,5,0,5"
+                                 Orientation="Horizontal"
+                                 HorizontalOptions="FillAndExpand"
+                                 Spacing="15">
+                            <StackLayout Padding="45,0,0,0"
+                                     HorizontalOptions="StartAndExpand"
+                                     VerticalOptions="Center">
+                                <Label Text="{Binding Value.Title}"
+                                   FontAttributes="Bold"
+                                   TextColor="Gray"
+                                   FontSize="Title"/>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label x:Name="key" BindingContext="{Binding Key}" IsVisible="False"/>
+                                    <Label x:Name="value" BindingContext="{Binding Path=BindingContext.CurrentMdetail,Source={RelativeSource AncestorType={x:Type ListView}}}" IsVisible="False"/>
+                                    <Label
+                                        FontSize="Title"
+                                        TextColor="Black"
+                                       >
+                                        <Label.Text>
+                                            <MultiBinding Converter="{converter:KeyValuePairsConverter}">
+                                                <Binding Path="BindingContext" Source="{x:Reference key}"/>
+                                                <Binding Path="BindingContext" Source="{x:Reference value}"/>
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                </StackLayout>
+                            </StackLayout>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InventoryManagement.Views.Inbound.InboundMoreActionsPage"
+             xmlns:local="clr-namespace:InventoryManagement.ViewModel"
+             xmlns:converter="clr-namespace:InventoryManagement.Converter"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Title="返回">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="保存" Order="Primary" Command="{Binding SaveInboundCommand}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <converter:KeyValuePairsConverter x:Key="keyValuePairsConverter"/>
+        <Color x:Key="Red">Red</Color>
+        <Color x:Key="Transparent">Transparent</Color>
+        <toolkit:BoolToObjectConverter x:Key="BoolToObjectConverter" TrueObject="{x:StaticResource Red}" FalseObject="{x:StaticResource Transparent}" />
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <local:InboundViewModel/>
+    </ContentPage.BindingContext>
+    <!--<ScrollView>-->
+        <ListView ItemsSource="{Binding KeyValuePairs}" RowHeight="90" HasUnevenRows="True" ItemTapped="ListView_ItemTapped">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Padding="15,5,0,5"
+                                     Orientation="Horizontal"
+                                     HorizontalOptions="FillAndExpand"
+                                     Spacing="15">
+                            <StackLayout Padding="45,0,0,0"
+                                         HorizontalOptions="StartAndExpand"
+                                         VerticalOptions="Center">
+                                <Label Text="*(必填)" TextColor="{Binding Value.Required,Converter={StaticResource BoolToObjectConverter}}"/>
+                                <Label Text="{Binding Value.Title}"
+                                       FontAttributes="Bold"
+                                       TextColor="Gray"
+                                       FontSize="Title"/>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label x:Name="key" BindingContext="{Binding Key}" IsVisible="False"/>
+                                    <Label x:Name="value" BindingContext="{Binding Path=BindingContext.CurrentInbound,Source={RelativeSource AncestorType={x:Type ListView}}}" IsVisible="False"/>
+                                    <Label
+                                        FontSize="Title"
+                                        TextColor="Black"
+                                           >
+                                        <Label.Text>
+                                            <MultiBinding Converter="{converter:KeyValuePairsConverter}">
+                                                <Binding Path="BindingContext" Source="{x:Reference key}"/>
+                                                <Binding Path="BindingContext" Source="{x:Reference value}"/>
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                </StackLayout>
+                            </StackLayout>
+                            <Label
+                                   Padding="0,0,35,0"
+                                   Grid.Column="2"
+                                   FontSize="Title"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="End"
+                                   HorizontalTextAlignment="Center"
+                                   Text=">"
+                                   IsVisible="{Binding Value.ActionMethod,Converter={toolkit:IsNotNullConverter}}"
+                                   TextColor="Black"
+                                   VerticalOptions="CenterAndExpand">
+                            </Label>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    <!--</ScrollView>-->
+</ContentPage>

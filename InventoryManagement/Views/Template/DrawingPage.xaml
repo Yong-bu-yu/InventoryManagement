@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Class="InventoryManagement.Views.Template.DrawingPage"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               CanBeDismissedByTappingOutsideOfPopup="False"
+               Color="Transparent"
+             >
+    <StackLayout
+        Orientation="Vertical"
+        WidthRequest="350"
+        HeightRequest="550"
+        Padding="15,15,15,15"
+        BackgroundColor="White"
+        Spacing="15"
+        >
+        <Frame
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand"
+            BorderColor="Gray"
+            Padding="1"
+            >
+            <toolkit:DrawingView
+                x:Name="DrawingViewControl"
+                IsMultiLineModeEnabled="true"
+                ShouldClearOnFinish="False"
+                LineColor="Black"
+                LineWidth="5"
+                Background="White"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand">
+            </toolkit:DrawingView>
+        </Frame>
+        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="End">
+            <Button Text="取消" HorizontalOptions="StartAndExpand" Clicked="OnNoButtonClicked"/>
+            <Button Text="确定" HorizontalOptions="EndAndExpand" Clicked="OnYesButtonClicked"/>
+        </StackLayout>
+    </StackLayout>
+</toolkit:Popup>

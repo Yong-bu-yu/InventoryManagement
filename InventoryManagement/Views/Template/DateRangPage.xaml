@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Class="InventoryManagement.Views.Template.DateRangPage"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"               
+               CanBeDismissedByTappingOutsideOfPopup="False"
+               Color="Transparent">
+    <StackLayout
+        Orientation="Vertical"
+        WidthRequest="350"
+        HeightRequest="550"
+        Padding="15,15,15,15"
+        BackgroundColor="White"
+        Spacing="15">
+        <StackLayout
+            Orientation="Horizontal"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="CenterAndExpand"
+            Spacing="5"
+            >
+            <Label Text="开始时间" HorizontalOptions="Start"/>
+            <DatePicker HorizontalOptions="EndAndExpand" MinimumWidthRequest="300" Format="yyyy-MM-dd" x:Name="StartDatePicker"/>
+        </StackLayout>
+        <StackLayout
+            Orientation="Horizontal"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="CenterAndExpand"
+            Spacing="5"
+            >
+            <Label Text="结束时间" HorizontalOptions="Start"/>
+            <DatePicker HorizontalOptions="EndAndExpand" MinimumWidthRequest="300" Format="yyyy-MM-dd" x:Name="EndDatePicker"/>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="End">
+            <Button Text="取消" HorizontalOptions="StartAndExpand" Clicked="OnNoButtonClicked"/>
+            <Button Text="确定" HorizontalOptions="EndAndExpand" Clicked="OnYesButtonClicked"/>
+        </StackLayout>
+    </StackLayout>
+</toolkit:Popup>

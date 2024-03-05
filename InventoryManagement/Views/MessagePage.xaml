@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InventoryManagement.Views.MessagePage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             CanBeDismissedByTappingOutsideOfPopup="False"
+             Color="Transparent"
+             >
+    <Grid
+        WidthRequest="350"
+        HeightRequest="550"
+        Padding="15,15,15,15"
+        BackgroundColor="White"
+        RowSpacing="15"
+        >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Label FontSize="Title" Grid.Row="0" x:Name="title"/>
+        <Label FontSize="Body" Grid.Row="1" x:Name="message"/>
+        <Button Text="知道了" Grid.Row="2" Clicked="CloseClicked" VerticalOptions="Start"/>
+    </Grid>
+</toolkit:Popup>

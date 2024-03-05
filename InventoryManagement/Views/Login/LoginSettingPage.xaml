@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InventoryManagement.Views.Login.LoginSettingPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             CanBeDismissedByTappingOutsideOfPopup="False"
+             Color="Transparent"             
+             >
+    <Grid
+        WidthRequest="350"
+        HeightRequest="550"
+        Padding="15,15,15,15"
+        BackgroundColor="White"
+        >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Button Grid.Row="0" VerticalOptions="End" HorizontalOptions="End" Text="关闭" Command="{Binding CloseLoginSettingDialogCommand}"/>
+        <VerticalStackLayout Grid.Row="1" Spacing="15" VerticalOptions="CenterAndExpand">
+            <Label Text="IP地址"/>
+            <Editor Placeholder="请输入IP地址" VerticalOptions="CenterAndExpand" Text="{Binding IpAddress}"/>
+            <Label Text="人员导入"/>
+            <Grid ColumnSpacing="15">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Picker
+                    Title="选择用户组"
+                    ItemsSource="{Binding PickerItemsSource}"
+                    SelectedItem="{Binding SelectedUserGroup}"
+                    Grid.Column="0"
+                   >
+                </Picker>
+                <Button Grid.Column="1" Text="确认导入" Command="{Binding SystemUserImportCommand}"/>
+            </Grid>
+        </VerticalStackLayout>
+        <Button Grid.Row="2" Text="保存" VerticalOptions="Start" HorizontalOptions="Start" Command="{Binding SaveSettingCommand}"/>
+    </Grid>
+</toolkit:Popup>

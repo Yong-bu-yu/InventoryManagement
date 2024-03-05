@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InventoryManagement.Views.Login.LoginPage"
+             xmlns:local="clr-namespace:InventoryManagement.ViewModel"
+             Title="登录">
+    <ContentPage.BindingContext>
+        <local:LoginViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="设置" Command="{Binding OpenLoginSettingDialogCommand}"/>
+    </ContentPage.ToolbarItems>
+    <VerticalStackLayout VerticalOptions="CenterAndExpand" Padding="15,15,15,15">
+        <VerticalStackLayout VerticalOptions="CenterAndExpand" Spacing="15">
+            <Label Text="用户登录名" FontSize="Title"/>
+            <Editor Placeholder="请输入用户登录名" FontSize="Medium" Text="{Binding UserName}"/>
+            <Label Text="用户密码" FontSize="Title"/>
+            <Entry IsPassword="True" Placeholder="请输入用户密码" FontSize="Medium" Text="{Binding PassWord}"/>
+            <Button Text="登录" Command="{Binding LoginCommand}"/>
+        </VerticalStackLayout>
+    </VerticalStackLayout>
+</ContentPage>

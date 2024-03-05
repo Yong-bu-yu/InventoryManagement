@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="InventoryManagement.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:InventoryManagement"
+    xmlns:login="clr-namespace:InventoryManagement.Views.Login"
+    xmlns:inbound="clr-namespace:InventoryManagement.Views.Inbound"
+    xmlns:unbound="clr-namespace:InventoryManagement.Views.Unbound"
+    xmlns:inventory="clr-namespace:InventoryManagement.Views.Inventory"
+    xmlns:mdetail="clr-namespace:InventoryManagement.Views.Mdetail"
+    xmlns:historical="clr-namespace:InventoryManagement.Views.Historical"
+    xmlns:systemManagement="clr-namespace:InventoryManagement.Views.SystemManagement"
+    Shell.FlyoutBehavior="Flyout">
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid ColumnDefinitions="0.2*,0.8*" Padding="15">
+                <Image Source="{Binding FlyoutIcon}"
+                       Margin="5"
+                       HeightRequest="45" />
+                <Label Grid.Column="1"
+                       Text="{Binding Title}"
+                       FontSize="Title"
+                       VerticalTextAlignment="Center" />
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+    <!--<ShellContent
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage"
+        />-->
+    <ShellContent
+        Title="登录"
+        ContentTemplate="{DataTemplate login:LoginPage}"
+        Route="LoginPage"
+        Shell.FlyoutBehavior="Disabled"
+        FlyoutItemIsVisible="False"
+        />
+    <FlyoutItem
+        Title="入库任务"
+        >
+        <ShellContent
+            ContentTemplate="{DataTemplate inbound:InboundPage}"
+            Route="InboundPage"  
+                >
+        </ShellContent>
+    </FlyoutItem>
+    <FlyoutItem
+        Title="出库任务"
+        >
+        <ShellContent
+            ContentTemplate="{DataTemplate unbound:UnboundPage}"
+            Route="UnboundPage"
+                >
+        </ShellContent>
+    </FlyoutItem>
+    <FlyoutItem
+        Title="盘点任务"
+        >
+        <ShellContent
+            ContentTemplate="{DataTemplate inventory:InventoryPage}"
+            Route="InventoryPage"
+                >
+        </ShellContent>
+    </FlyoutItem>
+    <FlyoutItem
+        Title="库存查询"
+        >
+        <ShellContent
+            ContentTemplate="{DataTemplate mdetail:MdetailPage}"
+            Route="MdetailPage"
+                >
+        </ShellContent>
+    </FlyoutItem>
+    <FlyoutItem
+        Title="历史记录"
+        >
+        <ShellContent
+            ContentTemplate="{DataTemplate historical:HistoricalPage}"
+            Route="HistoricalPage"
+                >
+        </ShellContent>
+    </FlyoutItem>
+    <FlyoutItem
+        Title="系统管理"
+        >
+        <ShellContent
+            ContentTemplate="{DataTemplate systemManagement:SystemManagementPage}"
+            Route="SystemManagementPage"
+                >
+        </ShellContent>
+    </FlyoutItem>
+</Shell>

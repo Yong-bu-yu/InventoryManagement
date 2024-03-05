@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InventoryManagement.Views.Mdetail.MdetailPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:converter="clr-namespace:InventoryManagement.Converter"
+             xmlns:mdetail="clr-namespace:InventoryManagement.Model"
+             xmlns:local="clr-namespace:InventoryManagement.ViewModel"
+             Title="库存查询">
+    <ContentPage.Resources>
+        <Color x:Key="Danger">#f78989</Color>
+        <Color x:Key="Success">#85ce61</Color>
+        <Color x:Key="Warning">#ebb563</Color>
+        <Color x:Key="Info">#a6a9ad</Color>
+        <Color x:Key="Primary">#66b1ff</Color>
+        <converter:IndexConverter x:Key="indexConverter" x:TypeArguments="mdetail:Mdetail"/>
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <local:MdetailViewModel/>
+    </ContentPage.BindingContext>
+    <VerticalStackLayout Spacing="15" Padding="15">
+        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="15">
+            <VerticalStackLayout HorizontalOptions="FillAndExpand">
+                <Label Text="物资码(流水号)"/>
+                <Entry Placeholder="物资码(流水号)" Text="{Binding RNO}"/>
+            </VerticalStackLayout>
+            <VerticalStackLayout HorizontalOptions="FillAndExpand">
+                <Label Text="物料编码"/>
+                <Entry Placeholder="物料编码" Text="{Binding ICD}"/>
+            </VerticalStackLayout>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="15">
+            <VerticalStackLayout HorizontalOptions="FillAndExpand">
+                <Label Text="物料名称"/>
+                <Entry Placeholder="物料名称" Text="{Binding INA}"/>
+            </VerticalStackLayout>
+            <VerticalStackLayout HorizontalOptions="FillAndExpand">
+                <Label/>
+                <Button Text="查询" BackgroundColor="{x:StaticResource Primary}" Command="{Binding GetMdetailListCommand}"/>
+            </VerticalStackLayout>
+        </StackLayout>
+        <Line Stroke="Gray" X1="900" />
+        <ScrollView VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand">
+            <CollectionView
+                MinimumHeightRequest="100"
+                ItemsSource="{Binding MdetailList}"
+                EmptyView="暂时没有数据">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame 
+                            WidthRequest="330"
+                            CornerRadius="5"
+                            HasShadow="True"
+                            Margin="5"
+                            Padding="10"
+                            HorizontalOptions="CenterAndExpand"
+                            VerticalOptions="CenterAndExpand"
+                            BackgroundColor="{x:StaticResource Success}"
+                            >
+                            <toolkit:Expander>
+                                <toolkit:Expander.Header>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label BindingContext="{Binding .}" IsVisible="False" x:Name="currentMdetail"/>
+                                        <Label
+                                            HorizontalOptions="Start"                                        
+                                            Text="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}},Path=ItemsSource,Converter={StaticResource indexConverter},ConverterParameter={Binding Source={x:Reference currentMdetail},Path=BindingContext}}"
+                                            FontAttributes="Bold"
+                                            FontSize="Title" 
+                                            TextColor="White"
+                                            Padding="0,15,15,15"
+                                        />
+                                        <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand">
+                                            <Label
+                                                HorizontalOptions="StartAndExpand"
+                                                Text="{Binding RNO,StringFormat='流水号:{0}'}"
+                                                FontSize="Body"
+                                                TextColor="White"
+                                            />
+                                            <Label
+                                                HorizontalOptions="StartAndExpand"
+                                                Text="{Binding ICD,StringFormat='物料编码:{0}'}"
+                                                FontSize="Body"
+                                                TextColor="White"
+                                            />
+                                            <Label
+                                                HorizontalOptions="StartAndExpand"
+                                                Text="{Binding INA,StringFormat='物料名称:{0}'}"
+                                                FontSize="Body"
+                                                TextColor="White"
+                                            />
+                                            <Label
+                                                HorizontalOptions="StartAndExpand"
+                                                Text="{Binding QUA,StringFormat='库存数量:{0}'}"
+                                                FontSize="Body"
+                                                TextColor="White"
+                                            />
+                                            <Label
+                                                HorizontalOptions="StartAndExpand"
+                                                Text="{Binding KWNAME,StringFormat='所在库位:{0}'}"
+                                                FontSize="Body"
+                                                TextColor="White"
+                                            />
+                                        </StackLayout>
+                                    </StackLayout>
+                                </toolkit:Expander.Header>
+                                <Frame                                    
+                                    WidthRequest="330"
+                                    CornerRadius="5"
+                                    HasShadow="True"
+                                    Margin="5"
+                                    Padding="10"
+                                    BorderColor="White"
+                                    BackgroundColor="{x:StaticResource Success}"
+                                    HorizontalOptions="CenterAndExpand"
+                                    VerticalOptions="CenterAndExpand">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Button Text="详情" HorizontalOptions="EndAndExpand" BackgroundColor="{x:StaticResource Info}" Command="{Binding Source={x:RelativeSource AncestorType={x:Type local:MdetailViewModel}},Path=GetInfoMdetailCommand}" CommandParameter="{Binding .}"/>
+                                    </StackLayout>
+                                </Frame>
+                            </toolkit:Expander>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+    </VerticalStackLayout>
+</ContentPage>

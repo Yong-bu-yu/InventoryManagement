@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="InventoryManagement.Views.SystemManagement.SystemManagementPage"
+             xmlns:local="clr-namespace:InventoryManagement.ViewModel"
+             xmlns:converter="clr-namespace:InventoryManagement.Converter"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Title="系统管理">
+    <ContentPage.BindingContext>
+        <local:SystemManagementViewModel/>
+    </ContentPage.BindingContext>
+    <ScrollView>
+        <ListView ItemsSource="{Binding KeyValuePairs}" RowHeight="90" HasUnevenRows="True" ItemTapped="ListView_ItemTapped">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Padding="15,5,0,5"
+                            Orientation="Horizontal"
+                            HorizontalOptions="FillAndExpand"
+                            Spacing="15">
+                            <StackLayout Padding="45,0,0,0"
+                                HorizontalOptions="StartAndExpand"
+                                VerticalOptions="Center">
+                                <Label Text="{Binding Value.Title}"
+                                    FontAttributes="Bold"
+                                    TextColor="Gray"
+                                    FontSize="Title"/>
+                            </StackLayout>
+                            <Label
+                                Padding="0,0,35,0"
+                                Grid.Column="2"
+                                FontSize="Title"
+                                FontAttributes="Bold"
+                                HorizontalOptions="End"
+                                HorizontalTextAlignment="Center"
+                                Text=">"
+                                IsVisible="{Binding Value.ActionMethod,Converter={toolkit:IsNotNullConverter}}"
+                                TextColor="Black"
+                                VerticalOptions="CenterAndExpand">
+                            </Label>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ScrollView>
+</ContentPage>

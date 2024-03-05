@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="InventoryManagement.Views.Unbound.UnboundPage"
+             xmlns:unbound="clr-namespace:InventoryManagement.Model"
+             xmlns:converter="clr-namespace:InventoryManagement.Converter"
+             xmlns:local="clr-namespace:InventoryManagement.ViewModel"
+             Title="出库任务">
+    <ContentPage.Resources>
+        <Color x:Key="Danger">#f78989</Color>
+        <Color x:Key="Success">#85ce61</Color>
+        <Color x:Key="Warning">#ebb563</Color>
+        <Color x:Key="Info">#a6a9ad</Color>
+        <Color x:Key="Primary">#66b1ff</Color>
+        <converter:IndexConverter x:Key="indexConverter" x:TypeArguments="unbound:Unbound"/>
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <local:UnboundViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="添加" Order="Primary" Command="{Binding AddUnboundCommand}"/>
+        <ToolbarItem Text="显示已出库" Order="Secondary" Command="{Binding ShowUnboundCommand}"/>
+        <ToolbarItem Text="隐藏已出库" Order="Secondary" Command="{Binding HideUnboundCommand}"/>
+    </ContentPage.ToolbarItems>
+    <!--<ScrollView>-->
+        <CollectionView
+            x:Name="collectionView"
+            MinimumHeightRequest="100"
+            ItemsSource="{Binding UnboundList}"
+            EmptyView="暂时没有数据">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame 
+                    WidthRequest="330"
+                    CornerRadius="5"
+                    HasShadow="True"
+                    Margin="5"
+                    Padding="10"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand"
+                    >
+                        <Frame.Triggers>
+                            <DataTrigger TargetType="Frame" Value="待出库" Binding="{Binding STA}">
+                                <Setter Property="BackgroundColor" Value="{x:StaticResource Danger}"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Frame" Value="已出库" Binding="{Binding STA}">
+                                <Setter Property="BackgroundColor" Value="{x:StaticResource Success}"/>
+                            </DataTrigger>
+                        </Frame.Triggers>
+                        <toolkit:Expander>
+                            <toolkit:Expander.Header>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label BindingContext="{Binding .}" IsVisible="False" x:Name="currentUnbound"/>
+                                    <Label
+                                    HorizontalOptions="Start"                                        
+                                    Text="{Binding Source={RelativeSource AncestorType={x:Type CollectionView}},Path=ItemsSource,Converter={StaticResource indexConverter},ConverterParameter={Binding Source={x:Reference currentUnbound},Path=BindingContext}}"
+                                    FontAttributes="Bold"
+                                    FontSize="Title" 
+                                    TextColor="White"
+                                    Padding="0,15,15,15"
+                                    />
+                                    <StackLayout Orientation="Vertical" HorizontalOptions="StartAndExpand">
+                                        <Label
+                                        HorizontalOptions="StartAndExpand"
+                                        Text="{Binding RNO,StringFormat='流水号:{0}'}"
+                                        FontSize="Body"
+                                        TextColor="White"
+                                    />
+                                        <Label
+                                        HorizontalOptions="StartAndExpand"
+                                        Text="{Binding ICD,StringFormat='物料号:{0}'}"
+                                        FontSize="Body"
+                                        TextColor="White"
+                                    />
+                                        <Label
+                                        HorizontalOptions="StartAndExpand"
+                                        Text="{Binding STA,StringFormat='状态:{0}'}"
+                                        FontSize="Body"
+                                        TextColor="White"
+                                    />
+                                    </StackLayout>
+                                </StackLayout>
+                            </toolkit:Expander.Header>
+                            <Frame 
+                            WidthRequest="330"
+                            CornerRadius="5"
+                            HasShadow="True"
+                            Margin="5"
+                            Padding="10"
+                            BorderColor="White"
+                            HorizontalOptions="CenterAndExpand"
+                            VerticalOptions="CenterAndExpand">
+                                <Frame.Triggers>
+                                    <DataTrigger TargetType="Frame" Value="待出库" Binding="{Binding STA}">
+                                        <Setter Property="BackgroundColor" Value="{x:StaticResource Danger}"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Frame" Value="已出库" Binding="{Binding STA}">
+                                        <Setter Property="BackgroundColor" Value="{x:StaticResource Success}"/>
+                                    </DataTrigger>
+                                </Frame.Triggers>
+                                <StackLayout Orientation="Horizontal">
+                                    <Button Text="编辑" HorizontalOptions="StartAndExpand" BackgroundColor="{x:StaticResource Warning}" Command="{Binding Source={x:RelativeSource AncestorType={x:Type local:UnboundViewModel}},Path=EditUnboundCommand}" CommandParameter="{Binding .}">
+                                        <Button.Triggers>
+                                            <DataTrigger TargetType="Button" Value="待出库" Binding="{Binding STA}">
+                                                <Setter Property="IsVisible" Value="True"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Button" Value="已出库" Binding="{Binding STA}">
+                                                <Setter Property="IsVisible" Value="False"/>
+                                            </DataTrigger>
+                                        </Button.Triggers>
+                                    </Button>
+                                    <Button Text="删除" HorizontalOptions="CenterAndExpand" BackgroundColor="Red" Command="{Binding Source={x:RelativeSource AncestorType={x:Type local:UnboundViewModel}},Path=DeleteUnboundCommand}" CommandParameter="{Binding .}">
+                                        <Button.Triggers>
+                                            <DataTrigger TargetType="Button" Value="待出库" Binding="{Binding STA}">
+                                                <Setter Property="IsVisible" Value="True"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Button" Value="已出库" Binding="{Binding STA}">
+                                                <Setter Property="IsVisible" Value="False"/>
+                                            </DataTrigger>
+                                        </Button.Triggers>
+                                    </Button>
+                                    <Button Text="详情" HorizontalOptions="EndAndExpand" BackgroundColor="{x:StaticResource Info}" Command="{Binding Source={x:RelativeSource AncestorType={x:Type local:UnboundViewModel}},Path=GetInfoUnboundCommand}" CommandParameter="{Binding .}"/>
+                                </StackLayout>
+                            </Frame>
+                        </toolkit:Expander>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    <!--</ScrollView>-->
+</ContentPage>
